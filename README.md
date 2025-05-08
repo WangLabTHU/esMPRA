@@ -9,6 +9,7 @@ This pipeline is mainly based on the MPRA experiment from [Tewhey et al.](https:
 ## Contents
 1. [Introduction](#introduction)
 2. [System Requirements](#system-requirements)
+3. [A pipeline implementation example for running all steps](#overall_pipeline)
 3. [Mapping oligos with barcodes after plasmid construction](#step1_oligo_barcode_map)
 4. [Getting plasmid abundance after inserting the reporter gene](#step2_get_plasmid_counts)
 5. [Getting RNA (cDNA) abundance after reverse transcription](#step3_get_RNA_counts)
@@ -31,12 +32,15 @@ This package requires only a standard computer with enough RAM to support the in
 
 The test files are from the ENCODE database. All runtime tests below are based on these files. After being organized, they are saved on [ZENODO](https://zenodo.org/records/15034449), and readers can download them for testing or reference.
 
-The reference run time below are measured with CPU: Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz
+The reference run time below are measured with CPU: Intel(R) Xeon(R) Gold 6226R CPU @ 2.90GHz.
+
+To verify that the entire esMPRA workflow can be implemented on a low-configuration personal computer, we also conducted tests on a lightweight laptop equipped with a Windows system, 16G RAM, and an Intel (R) Core (TM) i7 - 1065G7 CPU @ 1.30GHz. The runtime will also be provided.
 
 **OS Requirements:** 
 
 The package has been tested on the following system:
 - Linux: CentOS 7.8
+- Windows 10
 
 The function of this package could be achieved with any OS supporting Python.
 
@@ -85,6 +89,21 @@ The pipeline may use [FLASH2](https://github.com/dstreett/FLASH2) besides Python
 
 
 4. Then all the following functions can be implemented via corresponding commands in the command line.
+
+
+
+
+## A pipeline implementation example for running all steps <a name="overall_pipeline">
+
+To help beginners understand the esMPRA workflow faster, we've included a ready-to-run Python scripts named "run_all_steps.py" in the test_scripts folder. This script covers the complete MPRA data processing procedure, allowing users to intuitively learn how to use esMPRA. If users want to test the scripts with our prepared data, they only need to download the pre-arranged test data from ZENODO [(download data)](https://zenodo.org/records/15034449) and unzip it in the test_scripts folder. Then, run the test script using the following command:
+
+
+    ```
+    python run_all_steps.py
+    ```
+
+All steps in the MPRA data processing pipeline will be automatically executed. The expected runtime is the sum of the runtimes of the following sections.
+
 
 
 ## Mapping oligos with barcodes after plasmid construction <a name="step1_oligo_barcode_map">
@@ -160,7 +179,7 @@ Reference run time for this step: 1:01:50, 235% CPU-Util. See the reference runn
 If you haven't installed flash2, you'll need to replace the "--use_flash" command in the script with "--oligo_length 200".
 
 Reference run time for this step (not flash mode): 1:37:07, 99% CPU-Util
-
+Reference run time on the lightweight laptop (not flash mode): 2:11:00, ~35% CPU-Util
 
 
 
@@ -231,7 +250,7 @@ This script includes instructions for running step2_get_plasmid_counts and condu
 
 Reference run time for this step: 44:40, 101% CPU-Util. See the reference running result in the qc_report_for_step2.pdf file within the ref_result folder.
 
-
+Reference run time on the lightweight laptop: 51:09, ~35% CPU-Util
 
 
 ## Getting RNA (cDNA) abundance after reverse transcription <a name="step3_get_RNA_counts">
@@ -300,7 +319,7 @@ This script includes instructions for running step3_get_RNA_counts and conductin
 
 Reference run time for this step: 57:41, 100% CPU-Util. See the reference running result in the qc_report_for_step3.pdf file within the ref_result folder.
 
-
+Reference run time on the lightweight laptop: 67:29, ~35% CPU-Util
 
 
 ## Quantifying the activity of cis-regulatory elements <a name="step4_get_result">
@@ -366,6 +385,7 @@ This script includes instructions for running step4_get_result and conducting th
 
 Reference run time for this step: 2:45, 127% CPU-Util. See the reference running result in the qc_report_for_step4.pdf file within the ref_result folder.
 
+Reference run time on the lightweight laptop: 3:41, ~35% CPU-Util
 
 
 ## Assessing the reproducibility of the experiment <a name="step5_compare_diff_rep">
@@ -403,7 +423,7 @@ This script includes instructions for running step5_compare_diff_rep after runni
 
 Reference run time for this step: 2:45, 127% CPU-Util. See the reference running result in the example_step5.png file within the ref_result folder.
 
-
+Reference run time on the lightweight laptop: 3:41, ~35% CPU-Util
 
 ## Generating data for MPRAnalyze <a name="generate_data_for_MPRAnalyze">
 In addition to the aforementioned functions, we also provide interfaces for generating the data required for MPRAnalyze, so as to facilitate more in-depth statistical analysis of MPRA data.
